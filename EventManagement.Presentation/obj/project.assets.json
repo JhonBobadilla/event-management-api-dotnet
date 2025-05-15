@@ -107,6 +107,42 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "EventManagement.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "EventManagement.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/EventManagement.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EventManagement.Application.dll": {}
+        }
+      },
+      "EventManagement.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/EventManagement.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EventManagement.Domain.dll": {}
+        }
+      },
+      "EventManagement.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "EventManagement.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/EventManagement.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EventManagement.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -473,10 +509,27 @@
         "swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
+    },
+    "EventManagement.Application/1.0.0": {
+      "type": "project",
+      "path": "../EventManagement.Application/EventManagement.Application.csproj",
+      "msbuildProject": "../EventManagement.Application/EventManagement.Application.csproj"
+    },
+    "EventManagement.Domain/1.0.0": {
+      "type": "project",
+      "path": "../EventManagement.Domain/EventManagement.Domain.csproj",
+      "msbuildProject": "../EventManagement.Domain/EventManagement.Domain.csproj"
+    },
+    "EventManagement.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../EventManagement.Infrastructure/EventManagement.Infrastructure.csproj",
+      "msbuildProject": "../EventManagement.Infrastructure/EventManagement.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "EventManagement.Application >= 1.0.0",
+      "EventManagement.Infrastructure >= 1.0.0",
       "Microsoft.AspNetCore.OpenApi >= 8.0.15",
       "Swashbuckle.AspNetCore >= 6.6.2"
     ]
@@ -487,11 +540,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Presentation\\EventManagement.Presentation.csproj",
+      "projectUniqueName": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Presentation\\EventManagement.Presentation.csproj",
       "projectName": "EventManagement.Presentation",
-      "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Presentation\\EventManagement.Presentation.csproj",
+      "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Presentation\\EventManagement.Presentation.csproj",
       "packagesPath": "C:\\Users\\jhona\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Presentation\\obj\\",
+      "outputPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Presentation\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jhona\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -505,7 +558,14 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Application\\EventManagement.Application.csproj": {
+              "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Application\\EventManagement.Application.csproj"
+            },
+            "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
