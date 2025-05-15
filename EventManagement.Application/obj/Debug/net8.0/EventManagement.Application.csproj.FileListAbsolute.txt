@@ -2,7 +2,9 @@ C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-d
 C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-dotnet\EventManagement.Application\bin\Debug\net8.0\EventManagement.Application.dll
 C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-dotnet\EventManagement.Application\bin\Debug\net8.0\EventManagement.Application.pdb
 C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-dotnet\EventManagement.Application\bin\Debug\net8.0\EventManagement.Domain.dll
+C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-dotnet\EventManagement.Application\bin\Debug\net8.0\EventManagement.Infrastructure.dll
 C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-dotnet\EventManagement.Application\bin\Debug\net8.0\EventManagement.Domain.pdb
+C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-dotnet\EventManagement.Application\bin\Debug\net8.0\EventManagement.Infrastructure.pdb
 C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-dotnet\EventManagement.Application\obj\Debug\net8.0\EventManagement.Application.csproj.AssemblyReference.cache
 C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-dotnet\EventManagement.Application\obj\Debug\net8.0\EventManagement.Application.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\jhona\OneDrive\Escritorio\programacion\proyectos\event-management-api-dotnet\EventManagement.Application\obj\Debug\net8.0\EventManagement.Application.AssemblyInfoInputs.cache
