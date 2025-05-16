@@ -3,8 +3,10 @@ using EventManagement.Infrastructure.Interfaces;
 using EventManagement.Infrastructure.Repositories;
 using EventManagement.Application.Interfaces;
 using EventManagement.Application.Services;
+using EventManagement.Domain.Entities;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -19,6 +21,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Registrar servicios y repositorios para inyección de dependencias
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
+
+// === REGISTRA EL SERVICIO DE USUARIOS Y HASHER ===
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 // Leer configuración JWT
 var jwtKey = builder.Configuration["Jwt:Key"];
@@ -48,8 +54,6 @@ builder.Services.AddAuthentication(options =>
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        
-             
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = true,
@@ -63,13 +67,13 @@ builder.Services.AddAuthentication(options =>
     {
         OnAuthenticationFailed = context =>
         {
-            Console.WriteLine("❌ JWT AUTH FAILED:");
+            Console.WriteLine("JWT PRESENTA FALLA:");
             Console.WriteLine(context.Exception.ToString());
             return Task.CompletedTask;
         },
         OnTokenValidated = context =>
         {
-            Console.WriteLine("✅ JWT TOKEN VALIDADO:");
+            Console.WriteLine("JWT TOKEN VALIDADO:");
             Console.WriteLine("Usuario: " + context.Principal.Identity?.Name);
             return Task.CompletedTask;
         },
@@ -124,6 +128,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
 
 

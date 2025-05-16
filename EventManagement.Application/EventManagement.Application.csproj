@@ -11,5 +11,9 @@
     <ProjectReference Include="..\EventManagement.Infrastructure\EventManagement.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
+  </ItemGroup>
+
 </Project>
 

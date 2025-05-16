@@ -77,7 +77,7 @@ En appsettings.json, configure la clave secreta para JWT:
 
 ```csharp
 "Jwt": {
-    "Key": "************" // Clave de pruebas de los endpoints
+    "Key": "************"
   }
 ```
 
@@ -100,62 +100,70 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 ```
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
 ## 8. Ejecución y pruebas locales
 
-En la terminal desde la carpeta   EventManagement.Presentation
+1. Desde la terminal, en la carpeta `EventManagement.Presentation`, ejecuta:
 
 ```bash
-
 dotnet build
 dotnet run
-
 ```
-
-- La API, documentación y prueba está disponible con Swagger en:
+2. La API estará disponible con Swagger en:
 
 http://localhost:5150/swagger/index.html
 
+3. Registro de usuario
 
+Antes de iniciar sesión, registra un usuario usando el endpoint:POST /api/Auth/register
+Haz clic en Try it out y envía un cuerpo como este:
 
-
+```JSON
 {
-  "email": "admin@admin.com",
-  "password": "admin"
+  "firstName": "Jhon",
+  "lastName": "Bobadilla",
+  "email": "jhonprueba@correo.com",
+  "password": "123456",
+  "phone": "3200000000",
+  "city": "Bogotá"
+}
+```
+- Si la operación es exitosa, verás:
+
+```JSON
+{
+  "message": "Usuario registrado exitosamente."
+}
+```
+4. AUTENTICACIÓN:
+
+- Dirígete a POST /api/Auth/login → haz clic en Try it out.
+- Reemplaza el cuerpo con el correo y contraseña del usuario recién registrado, manteniendo el formato JSON:
+
+```JSON
+{
+  "email": "jhonprueba@correo.com",
+  "password": "123456"
 }
 
+```
+- Haz clic en Execute y copia el token que se muestra.
 
+5. AUTORIZACIÓN
 
+- Haz clic en el botón Authorize (esquina superior derecha).
+- En el prompt, escribe Bearer, (seguido de un espacio) pega el token copiado.
 
+  formato correcto:   Bearer eyJhbGciOi.........4f8uQ7Suo 
+  formato incorrecto (Swagger lo pega así): Bearer {"token": "eyJhbGciOi.........4f8uQ7Suo"} 
 
+Borra los caracteres que sobran al inicio: ({"token": ") y al final ("}), hasta dejarlo en el formato correcto.
+
+Recomendación:
+Copia el token desde la consola del backend (donde también se imprime limpio).
+
+Con esto podrás autenticarte correctamente y probar todos los endpoints protegidos como GET /api/Events.
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## 9. Control de versiones y ramas Git
 
@@ -188,3 +196,7 @@ Dockerización y despliegue escalable (BONUS).
 El video privado donde se explica la solución y ejecución del proyecto está disponible en:
 
 [xxxxxxxxxxxxxxxxxxxxxxxxxx]
+
+
+
+
