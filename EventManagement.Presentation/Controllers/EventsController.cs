@@ -9,7 +9,7 @@ namespace EventManagement.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // Requiere autenticación con JWT
+    [Authorize] 
     public class EventsController : ControllerBase
     {
         private readonly IEventService _eventService;
@@ -22,6 +22,9 @@ namespace EventManagement.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Event>>> GetAll()
         {
+            var authHeader = Request.Headers["Authorization"].ToString();
+            Console.WriteLine("Authorization Header recibido: " + authHeader);
+
             var events = await _eventService.GetAllAsync();
             return Ok(events);
         }
@@ -63,4 +66,5 @@ namespace EventManagement.Presentation.Controllers
         }
     }
 }
+
 
