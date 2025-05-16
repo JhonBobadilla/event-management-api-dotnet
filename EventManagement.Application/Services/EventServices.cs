@@ -39,5 +39,12 @@ namespace EventManagement.Application.Services
         {
             return await _eventRepository.DeleteAsync(id);
         }
+
+        // MÉTODO CORRECTO PARA AGREGAR VARIOS EVENTOS EN UN SOLO LLAMADO A LA BD
+        public async Task AddRangeAsync(IEnumerable<Event> events)
+        {
+            await _eventRepository.AddRangeAsync(events);
+        }
     }
 }
+

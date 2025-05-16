@@ -11,5 +11,7 @@ namespace EventManagement.Application.Interfaces
         Task<Event> AddAsync(Event newEvent);
         Task<bool> UpdateAsync(Event updatedEvent);
         Task<bool> DeleteAsync(int id);
+        Task AddRangeAsync(IEnumerable<Event> events);
+
     }
 }

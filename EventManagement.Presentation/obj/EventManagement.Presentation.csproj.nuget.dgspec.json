@@ -29,8 +29,8 @@
               "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Domain\\EventManagement.Domain.csproj": {
                 "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Domain\\EventManagement.Domain.csproj"
               },
-              "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj"
+              "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj"
               }
             }
           }
@@ -133,14 +133,14 @@
         }
       }
     },
-    "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj": {
+    "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj",
         "projectName": "EventManagement.Infrastructure",
-        "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\jhona\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jhona\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -226,8 +226,8 @@
               "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Application\\EventManagement.Application.csproj": {
                 "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Application\\EventManagement.Application.csproj"
               },
-              "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj"
+              "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj"
               }
             }
           }
@@ -249,7 +249,7 @@
           "dependencies": {
             "EPPlus": {
               "target": "Package",
-              "version": "[8.0.5, )"
+              "version": "[5.8.8, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",

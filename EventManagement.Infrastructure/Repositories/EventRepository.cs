@@ -60,5 +60,12 @@ namespace EventManagement.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+            public async Task AddRangeAsync(IEnumerable<Event> events)
+        {
+            await _context.Events.AddRangeAsync(events);
+            await _context.SaveChangesAsync();
+        }
     }
 }
+

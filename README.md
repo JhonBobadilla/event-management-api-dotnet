@@ -165,9 +165,11 @@ Con esto podrás autenticarte correctamente y probar todos los endpoints protegi
 
 ---
 
-6. Creación de eventos
+6. Creación de eventos manualmente y con el excel
 
-- Crea un evento usando el endpoint: POST /api/Events
+- CREACIÓN MANUAL 
+
+- Crea un evento manualmente usando el endpoint: POST /api/Events
   Haz clic en Try it out y envía un cuerpo como este:
 
 ```JSON
@@ -182,9 +184,31 @@ Con esto podrás autenticarte correctamente y probar todos los endpoints protegi
   "longitude": -74.08175
 }
 ```
+- CREACIÓN MASIVA MEDIANTE ARCHIVO DE EXCEL  
+
+Descarga la plantilla de Excel "plantilla_eventos.xlsx" que está en la carpeta /docs del repositorio.
+
+Llena los eventos siguiendo el formato de la plantilla.
+
+Ve a POST /api/Events/upload-excel en Swagger, haz clic en Try it out y adjunta tu archivo Excel usando el campo file.
+
+Haz clic en Execute.
+
+Si el proceso es exitoso, verás un mensaje confirmando cuántos eventos fueron registrados.
+
+Nota: Todos los eventos del archivo serán agregados como si los hubieras registrado uno a uno usando el endpoint manual.
+
 7. Consulta de eventos
 
 Puedes ver todos los eventos usando el endpoint GET /api/Events.
+
+8. Carga de excel.... descarga el formato de excel en la carpeta docs plantilla_eventos.xlsx 
+
+{
+  "message": "Archivo recibido y hoja leída correctamente."
+}
+
+librería package EPPlus
 
 ## 9. Control de versiones y ramas Git
 
