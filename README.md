@@ -176,7 +176,7 @@ Con esto podrás autenticarte correctamente y probar todos los endpoints protegi
   "description": "Un evento técnico para la comunidad.",
   "date": "2025-06-25T09:00:00",
   "location": "Auditorio Principal",
-  "address": "Calle 123 #45-67",
+  "address": "Calle 123 # 45-67",
   "city": "Bogotá",
   "latitude": 4.60971,
   "longitude": -74.08175
