@@ -40,6 +40,8 @@ namespace EventManagement.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult<Event>> Create(Event newEvent)
         {
+            newEvent.Date = DateTime.SpecifyKind(newEvent.Date, DateTimeKind.Utc);
+
             var created = await _eventService.AddAsync(newEvent);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }

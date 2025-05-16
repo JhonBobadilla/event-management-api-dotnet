@@ -165,6 +165,27 @@ Con esto podrás autenticarte correctamente y probar todos los endpoints protegi
 
 ---
 
+6. Creación de eventos
+
+- Crea un evento usando el endpoint: POST /api/Events
+  Haz clic en Try it out y envía un cuerpo como este:
+
+```JSON
+{
+  "title": "Conferencia Internacional",
+  "description": "Un evento técnico para la comunidad.",
+  "date": "2025-06-25T09:00:00",
+  "location": "Auditorio Principal",
+  "address": "Calle 123 #45-67",
+  "city": "Bogotá",
+  "latitude": 4.60971,
+  "longitude": -74.08175
+}
+```
+7. Consulta de eventos
+
+Puedes ver todos los eventos usando el endpoint GET /api/Events.
+
 ## 9. Control de versiones y ramas Git
 
 El flujo de trabajo usa las siguientes ramas:
