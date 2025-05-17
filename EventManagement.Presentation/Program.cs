@@ -4,128 +4,161 @@ using EventManagement.Infrastructure.Repositories;
 using EventManagement.Application.Interfaces;
 using EventManagement.Application.Services;
 using EventManagement.Domain.Entities;
-
+using EventManagement.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Diagnostics; 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar conexión a la base de datos PostgreSQL
+// Configuración de logging mejorada
+builder.Logging.ClearProviders()
+       .AddConsole()
+       .AddDebug()
+       .AddConfiguration(builder.Configuration.GetSection("Logging"));
+
+// Configurar conexión a PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Registrar servicios y repositorios para inyección de dependencias
+// Registrar servicios principales
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
-
-// === REGISTRA EL SERVICIO DE USUARIOS Y HASHER ===
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
-// Leer configuración JWT
-var jwtKey = builder.Configuration["Jwt:Key"];
-var jwtIssuer = builder.Configuration["Jwt:Issuer"];
-var jwtAudience = builder.Configuration["Jwt:Audience"];
-
-Console.WriteLine("========== JWT KEY ES: " + jwtKey);
-Console.WriteLine($"JWT Key cargada: {jwtKey}");
-Console.WriteLine($"JWT Issuer: {jwtIssuer}");
-Console.WriteLine($"JWT Audience: {jwtAudience}");
-
-if (string.IsNullOrEmpty(jwtKey))
+// Configurar Mapbox con validación de token
+builder.Services.AddSingleton<MapboxNearbyService>(provider => 
 {
-    throw new InvalidOperationException("JWT Key no configurada.");
-}
-
-var key = Encoding.ASCII.GetBytes(jwtKey);
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
+    var token = builder.Configuration["Mapbox:AccessToken"];
+    if (string.IsNullOrEmpty(token) || !token.StartsWith("pk."))
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = true,
-        ValidIssuer = jwtIssuer,
-        ValidateAudience = true,
-        ValidAudience = jwtAudience,
-        ValidateLifetime = true
-    };
-
-    options.Events = new JwtBearerEvents
-    {
-        OnAuthenticationFailed = context =>
-        {
-            Console.WriteLine("JWT PRESENTA FALLA:");
-            Console.WriteLine(context.Exception.ToString());
-            return Task.CompletedTask;
-        },
-        OnTokenValidated = context =>
-        {
-            Console.WriteLine("JWT TOKEN VALIDADO:");
-            Console.WriteLine("Usuario: " + context.Principal.Identity?.Name);
-            return Task.CompletedTask;
-        },
-        OnChallenge = context =>
-        {
-            Console.WriteLine("OnChallenge triggered: " + context.ErrorDescription);
-            return Task.CompletedTask;
-        }
-    };
+        throw new InvalidOperationException("Token de Mapbox inválido o no configurado");
+    }
+    return new MapboxNearbyService(
+        token,
+        provider.GetRequiredService<ILogger<MapboxNearbyService>>());
 });
 
-// Configurar Swagger con autenticación JWT
+// Configuración JWT robusta
+var jwtConfig = builder.Configuration.GetSection("Jwt");
+var key = Encoding.ASCII.GetBytes(jwtConfig["Key"]!);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = true,
+            ValidIssuer = jwtConfig["Issuer"],
+            ValidateAudience = true,
+            ValidAudience = jwtConfig["Audience"],
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                var logger = context.HttpContext.RequestServices
+                    .GetRequiredService<ILogger<Program>>();
+                logger.LogError(context.Exception, "Error de autenticación JWT");
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                var logger = context.HttpContext.RequestServices
+                    .GetRequiredService<ILogger<Program>>();
+                logger.LogInformation("Usuario autenticado: {User}", 
+                    context.Principal?.Identity?.Name);
+                return Task.CompletedTask;
+            }
+        };
+    });
+
+// Configuración Swagger mejorada
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Event Management API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo 
+    { 
+        Title = "Event Management API", 
+        Version = "v1",
+        Description = "API para gestión de eventos",
+        Contact = new OpenApiContact
+        {
+            Name = "Soporte",
+            Email = "soporte@eventmanagement.com"
+        }
+    });
+
+    // Configuración de seguridad JWT para Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT Authorization header usando el esquema Bearer. Ingresa 'Bearer' seguido del token.",
+        Description = "JWT Authorization usando el esquema Bearer. Ejemplo: \"Bearer {token}\"",
         Name = "Authorization",
         In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
     });
+
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
-            new OpenApiSecurityScheme {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
 });
 
-builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Pipeline HTTP
+// Configuración del pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => 
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Event Management API v1");
+        c.RoutePrefix = string.Empty;
+    });
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
+
+// Middleware para manejar excepciones globalmente
+app.UseExceptionHandler("/error");
+
+app.Map("/error", (HttpContext context) => 
+{
+    var exceptionHandler = context.Features.Get<IExceptionHandlerFeature>();
+    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+    logger.LogError(exceptionHandler?.Error, "Error no manejado");
+    
+    return Results.Problem(
+        title: "Error interno del servidor",
+        statusCode: StatusCodes.Status500InternalServerError);
+});
 
 app.Run();
 

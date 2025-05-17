@@ -10,8 +10,8 @@ namespace EventManagement.Domain.Entities
         public string Location { get; set; } = null!;
         public string Address { get; set; } = null!;
         public string City { get; set; } = null!;
-        public float Latitude { get; set; }
-        public float Longitude { get; set; }
+        public float? Latitude { get; set; }
+        public float? Longitude { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
 

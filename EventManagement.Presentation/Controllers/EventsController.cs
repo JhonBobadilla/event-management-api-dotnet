@@ -1,11 +1,16 @@
-using Microsoft.AspNetCore.Http;      // Para IFormFile
-using OfficeOpenXml;                 // Para procesar archivos Excel con EPPlus
+using Microsoft.AspNetCore.Http;
+using OfficeOpenXml;
 using EventManagement.Application.Interfaces;
 using EventManagement.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EventManagement.Infrastructure.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
 
 namespace EventManagement.Presentation.Controllers
 {
@@ -15,10 +20,54 @@ namespace EventManagement.Presentation.Controllers
     public class EventsController : ControllerBase
     {
         private readonly IEventService _eventService;
+        private readonly MapboxNearbyService _mapboxService;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<EventsController> _logger;
 
-        public EventsController(IEventService eventService)
+        public EventsController(
+            IEventService eventService,
+            MapboxNearbyService mapboxService,
+            IConfiguration configuration,
+            ILogger<EventsController> logger)
         {
             _eventService = eventService;
+            _mapboxService = mapboxService;
+            _configuration = configuration;
+            _logger = logger;
+        }
+
+        [HttpGet("{id}/nearby")]
+        public async Task<IActionResult> GetNearbyPlaces(int id, [FromQuery] int radius = 500)
+        {
+            try
+            {
+                // 1. Obtener el evento
+                var evento = await _eventService.GetByIdAsync(id);
+                if (evento == null)
+                    return NotFound("Evento no encontrado.");
+
+                // 2. Validar coordenadas
+                if (!evento.Latitude.HasValue || !evento.Longitude.HasValue)
+                    return BadRequest("El evento no tiene coordenadas registradas.");
+
+                // 3. Validar radio
+                if (radius <= 0 || radius > 10000) // Máximo 10km
+                    return BadRequest("El radio debe estar entre 1 y 10000 metros");
+
+                // 4. Obtener lugares cercanos
+                var places = await _mapboxService.GetNearbyPlacesAsync(
+                    evento.Latitude.Value,
+                    evento.Longitude.Value,
+                    radius
+                );
+
+                return Ok(places);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error al obtener lugares cercanos para el evento {id}");
+                return StatusCode(500, "Error interno al buscar lugares cercanos");
+            }
         }
 
         [HttpGet]
@@ -38,7 +87,6 @@ namespace EventManagement.Presentation.Controllers
             if (ev == null) return NotFound();
             return Ok(ev);
         }
-
 
         [HttpPost]
         public async Task<ActionResult<Event>> Create(Event newEvent)
@@ -62,8 +110,6 @@ namespace EventManagement.Presentation.Controllers
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
-
-
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Event updatedEvent)
         {
@@ -84,9 +130,7 @@ namespace EventManagement.Presentation.Controllers
 
             return NoContent();
         }
-    
-        
-        
+
         [HttpPost("upload-excel")]
         public async Task<IActionResult> UploadExcel(IFormFile file)
         {
@@ -151,9 +195,6 @@ namespace EventManagement.Presentation.Controllers
             await _eventService.AddRangeAsync(eventsList);
 
             return Ok(new { message = $"Se registraron {eventsList.Count} eventos correctamente." });
-            }
-
-        } 
-
-    } 
- 
+        }
+    }
+}
