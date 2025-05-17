@@ -258,14 +258,20 @@ Esta funcionalidad es ideal para:
 •	Integrar mapas y navegación en plataformas de eventos.
 •	Proyectos de turismo, logística, reservas y mucho más.
 
-10. 
+10. Análisis Avanzado de Asistentes por Día de la Semana
 
+La API ofrece un endpoint especializado para consultar, analizar y visualizar la distribución de asistentes registrados a eventos según el día de la semana. 
 
+- Cómo funciona
 
+Puedes obtener el resumen de asistentes por día de la semana mediante el endpoint: 
+GET /api/Events/attendees-by-day
 
+- ¿Para qué sirve?
 
-
-
+Permite conocer en qué días se concentran la mayor cantidad de eventos y asistentes.
+Facilita la planeación, análisis de tendencias, generación de reportes y la toma de decisiones.
+Ideal para organizadores que requieren visualizar el impacto de sus eventos a lo largo de la semana.
 
 11. Otros endpoints:
 
@@ -279,36 +285,6 @@ DELETE /api/Events/{id}:
 Elimina un evento. Solo debes ingresar el ID del evento que deseas eliminar y hacer clic en Execute.
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## 9. Control de versiones y ramas Git
 
@@ -324,19 +300,7 @@ dev → test → main
 
 ---
 
-## 10. Hoja de Ruta del Desarrollo
-
-Integración de carga y procesamiento masivo de archivos Excel con eventos.
-
-Consulta de ubicaciones cercanas usando API de Mapbox.
-
-Análisis avanzado de asistentes por día de la semana.
-
-Dockerización y despliegue escalable (BONUS).
-
----
-
-## 11. Video Explicativo
+## 10. Video Explicativo
 
 El video privado donde se explica la solución y ejecución del proyecto está disponible en:
 
