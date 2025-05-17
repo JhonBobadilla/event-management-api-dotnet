@@ -8,8 +8,7 @@
 
 ## 1. Descripción
 
-API RESTful desarrollada en C# con Clean Architecture sobre .NET 8 para la gestión profesional de eventos.
-El proyecto implementa la estructura de Clean Architecture y define las entidades principales: User, Event y Attendee.
+Event Management API es una plataforma backend desarrollada en .NET 8 y C# bajo el patrón Clean Architecture, que permite la gestión profesional de eventos, usuarios y asistentes. Integra autenticación JWT para máxima seguridad y la API de Mapbox para consultar direcciones y lugares de interés cercanos a cada evento. Incluye funciones para carga masiva de eventos por Excel, mediante la API EPPlus, gestión CRUD completa y documentación interactiva mediante Swagger. Ideal para proyectos de eventos, turismo y logística que requieran escalabilidad y robustez. 
 
 ---
 
@@ -188,7 +187,7 @@ Con esto podrás autenticarte correctamente y probar todos los endpoints protegi
 
 Descarga la plantilla de Excel "plantilla_eventos.xlsx" que está en la carpeta /docs del repositorio.
 
-Llena los eventos siguiendo el formato de la plantilla.
+Llena los eventos siguiendo el formato exacto de la plantilla.
 
 Ve a POST /api/Events/upload-excel en Swagger, haz clic en Try it out y adjunta tu archivo Excel usando el campo file.
 
@@ -202,13 +201,82 @@ Nota: Todos los eventos del archivo serán agregados como si los hubieras regist
 
 Puedes ver todos los eventos usando el endpoint GET /api/Events.
 
-8. Carga de excel.... descarga el formato de excel en la carpeta docs plantilla_eventos.xlsx 
+8. Geolocalización: Consulta de Direcciones y Lugares Cercanos
 
-{
-  "message": "Archivo recibido y hoja leída correctamente."
-}
+La API integra la funcionalidad de búsqueda de direcciones y lugares de interés cercanos a las cordenadas del evento consultado utilizando el servicio de Mapbox, cada evento almacena coordenadas geográficas (latitude y longitude), que son las que se envian a la Api externa y esta devuelve los lugares y direcciones de interés. 
 
-librería package EPPlus
+- Cómo funciona:
+
+Puedes consultar lugares cercanos a un evento mediante el endpoint: GET /api/Events/{id}/nearby, ingresa el id del evento a consultar, el parámetro radius es opcional y define el radio de búsqueda en metros (por defecto 500m, máximo 10,000m).
+
+Cada elemento incluye:
+
+name: Nombre de la dirección o lugar de interés.
+type: Puede ser "address" (dirección) o "poi" (lugar de interés).
+latitude y longitude: Coordenadas del lugar encontrado.
+distance: Distancia en metros desde el evento consultado.
+
+Detalles técnicos
+
+- El servicio usa Mapbox Geocoding API y retorna hasta 10 resultados relevantes (direcciones y lugares de interés), la búsqueda considera ambos tipos (address y poi) para mayor utilidad.
+
+- Nota sobre las coordenadas
+
+Las coordenadas deben ingresarse correctamente como números decimales (latitude, longitude).
+
+Ejemplo para Bogotá centro:
+Latitude: 4.60971 - Longitude: -74.08175
+
+- ¿Para qué sirve?
+
+Esta funcionalidad es ideal para:
+
+•	Sugerir hoteles, restaurantes o atracciones cercanas a tus eventos.
+•	Integrar mapas y navegación en plataformas de eventos.
+•	Proyectos de turismo, logística, reservas y mucho más.
+
+9. Otros endpoints:
+
+GET /api/Events/{id}:
+Consulta los detalles de un evento específico según su ID.
+
+PUT /api/Events/{id}:
+Modifica la información de un evento existente. Ingresa el ID, copia toda la información actual del evento (formato JSON, que puedes obtener usando el endpoint GET /api/Events/{id}), realiza los cambios necesarios y haz clic en Execute.
+
+DELETE /api/Events/{id}:
+Elimina un evento. Solo debes ingresar el ID del evento que deseas eliminar y hacer clic en Execute.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## 9. Control de versiones y ramas Git
 
@@ -243,6 +311,3 @@ El video privado donde se explica la solución y ejecución del proyecto está d
 [xxxxxxxxxxxxxxxxxxxxxxxxxx]
 
 
-
-
-curl "https://api.mapbox.com/geocoding/v5/mapbox.places/-75.47942,10.391048.json?types=address&limit=10&access_token=pk.eyJ1IjoiamhvbmJvYmFkaWxsYSIsImEiOiJjbWFyZHRkbGQwNXg0MmxweXE2em54cWJxIn0.-0zJo0l819v1H56YrS6Z9A"

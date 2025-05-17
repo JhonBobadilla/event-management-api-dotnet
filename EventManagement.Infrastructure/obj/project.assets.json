@@ -762,11 +762,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj",
       "projectName": "EventManagement.Infrastructure",
-      "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\EventManagement.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\jhona\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jhona\\AppData\\Roaming\\NuGet\\NuGet.Config"
