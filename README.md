@@ -245,3 +245,4 @@ El video privado donde se explica la solución y ejecución del proyecto está d
 
 
 
+curl "https://api.mapbox.com/geocoding/v5/mapbox.places/-75.47942,10.391048.json?types=address&limit=10&access_token=pk.eyJ1IjoiamhvbmJvYmFkaWxsYSIsImEiOiJjbWFyZHRkbGQwNXg0MmxweXE2em54cWJxIn0.-0zJo0l819v1H56YrS6Z9A"
