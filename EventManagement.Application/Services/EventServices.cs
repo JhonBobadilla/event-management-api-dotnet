@@ -1,8 +1,10 @@
 using EventManagement.Application.Interfaces;
+using EventManagement.Application.Dtos; 
 using EventManagement.Domain.Entities;
 using EventManagement.Infrastructure.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace EventManagement.Application.Services
 {
@@ -45,6 +47,48 @@ namespace EventManagement.Application.Services
         {
             await _eventRepository.AddRangeAsync(events);
         }
+
+        // === NUEVO MÉTODO ===
+        public async Task<Dictionary<string, DaySummaryDto>> GetAttendeesSummaryByDayOfWeekAsync()
+        {
+            // Usando el repositorio para obtener los eventos CON asistentes
+            var eventsWithAttendees = await _eventRepository.GetAllWithAttendeesAsync();
+
+            var result = new Dictionary<string, DaySummaryDto>
+            {
+                { "Monday", new DaySummaryDto() },
+                { "Tuesday", new DaySummaryDto() },
+                { "Wednesday", new DaySummaryDto() },
+                { "Thursday", new DaySummaryDto() },
+                { "Friday", new DaySummaryDto() },
+                { "Saturday", new DaySummaryDto() },
+                { "Sunday", new DaySummaryDto() },
+            };
+
+            foreach (var ev in eventsWithAttendees)
+            {
+                // Usa el nombre del día en inglés, puedes traducirlo si quieres
+                var dayOfWeek = ev.Date.DayOfWeek.ToString();
+
+                if (result.ContainsKey(dayOfWeek))
+                {
+                    var summary = result[dayOfWeek];
+                    summary.TotalEvents++;
+                    int attendeeCount = ev.Attendees?.Count ?? 0;
+                    summary.TotalAttendees += attendeeCount;
+                    summary.Events.Add(new EventSummaryDto
+                    {
+                        EventId = ev.Id,
+                        Title = ev.Title,
+                        Date = ev.Date,
+                        AttendeesCount = attendeeCount
+                    });
+                }
+            }
+
+            return result;
+        }
     }
 }
+
 

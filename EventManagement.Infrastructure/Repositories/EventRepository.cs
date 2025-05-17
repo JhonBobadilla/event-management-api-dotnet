@@ -61,11 +61,20 @@ namespace EventManagement.Infrastructure.Repositories
             return true;
         }
 
-            public async Task AddRangeAsync(IEnumerable<Event> events)
+        public async Task AddRangeAsync(IEnumerable<Event> events)
         {
             await _context.Events.AddRangeAsync(events);
             await _context.SaveChangesAsync();
         }
+
+        // NUEVO MÉTODO: para el análisis avanzado de asistentes
+        public async Task<IEnumerable<Event>> GetAllWithAttendeesAsync()
+        {
+            return await _context.Events
+                .Include(e => e.Attendees)
+                .ToListAsync();
+        }
     }
 }
+
 

@@ -15,5 +15,8 @@ namespace EventManagement.Infrastructure.Interfaces
         Task<bool> DeleteAsync(int id);
         Task AddRangeAsync(IEnumerable<Event> events);
 
+        // NUEVO MÉTODO
+        Task<IEnumerable<Event>> GetAllWithAttendeesAsync();
     }
 }
+
