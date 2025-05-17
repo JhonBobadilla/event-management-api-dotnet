@@ -201,7 +201,30 @@ Nota: Todos los eventos del archivo serán agregados como si los hubieras regist
 
 Puedes ver todos los eventos usando el endpoint GET /api/Events.
 
-8. Geolocalización: Consulta de Direcciones y Lugares Cercanos
+8. Registro de Asistentes a Eventos
+
+La API permite registrar asistentes a un evento específico de forma sencilla y flexible. Cada asistente puede ser un usuario registrado o un invitado externo, y la información queda almacenada y asociada al evento correspondiente. 
+
+- Cómo funciona: 
+
+Puedes registrar asistentes a cualquier evento mediante el endpoint: POST /api/Attendees/register
+
+Debes enviar en el cuerpo de la solicitud (body) los datos del asistente y el evento al que se va a inscribir, en formato JSON.
+
+Cuerpo de la petición (ejemplo):
+
+```JSON
+{
+  "eventId": 17,
+  "firstName": "Joseph",
+  "lastName": "Borda",
+  "email": "joseph@correo.com",
+  "phone": "3207512548",
+  "city": "Bogotá",
+  "address": "Calle 123 #45-67"
+}
+```
+9. Geolocalización: Consulta de Direcciones y Lugares Cercanos
 
 La API integra la funcionalidad de búsqueda de direcciones y lugares de interés cercanos a las cordenadas del evento consultado utilizando el servicio de Mapbox, cada evento almacena coordenadas geográficas (latitude y longitude), que son las que se envian a la Api externa y esta devuelve los lugares y direcciones de interés. 
 
@@ -235,7 +258,16 @@ Esta funcionalidad es ideal para:
 •	Integrar mapas y navegación en plataformas de eventos.
 •	Proyectos de turismo, logística, reservas y mucho más.
 
-9. Otros endpoints:
+10. 
+
+
+
+
+
+
+
+
+11. Otros endpoints:
 
 GET /api/Events/{id}:
 Consulta los detalles de un evento específico según su ID.

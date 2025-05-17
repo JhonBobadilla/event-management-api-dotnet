@@ -14,6 +14,7 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics; 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuración de logging mejorada
@@ -31,6 +32,9 @@ builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IAttendeeService, AttendeeService>();
+builder.Services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+
 
 // Configurar Mapbox con validación de token
 builder.Services.AddSingleton<MapboxNearbyService>(provider => 

@@ -1,10 +1,13 @@
 namespace EventManagement.Application.Dtos
 {
     public class AttendeeRegisterDto
-    {
-        public int EventId { get; set; }   // id del evento al que se registra el asistente
-        public string Name { get; set; }
-        public string Email { get; set; }
-        // Agrega más campos si tu entidad Attendee los necesita (Phone, etc.)
-    }
+{
+    public int EventId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string? Phone { get; set; }
+    public string City { get; set; }
+    public string Address { get; set; } 
+}
 }
