@@ -99,7 +99,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 ```
 ---
 
-## 8. Ejecución y pruebas locales
+## 8. Instrucciones de instalación y ejecución
 
 1. Desde la terminal, en la carpeta `EventManagement.Presentation`, ejecuta:
 
@@ -294,11 +294,73 @@ El flujo de trabajo usa las siguientes ramas:
 - test: Pruebas e integración.
 - main: Versión estable para producción.
 
-Flujo:
-
 dev → test → main
 
+Los merges se realizan de `dev` a `test` para pruebas y de `test` a `main` para releases estables.
+
 ---
+
+## 10. Dockerización de la API
+
+Como parte de las buenas prácticas de DevOps y despliegue, se incluyeron los archivos necesarios para la dockerización de la API:
+
+Dockerfile
+docker-compose.yml
+entrypoint.sh
+
+Estos archivos han sido preparados para facilitar la construcción y el despliegue futuro de la API en contenedores Docker, permitiendo una mayor portabilidad y escalabilidad del sistema.
+
+Nota:
+
+Debido a limitaciones de tiempo, no fue posible completar y probar el despliegue de la API en Docker. Sin embargo, los archivos mencionados se encuentran listos y estructurados en el repositorio, de manera que puedan ser utilizados o ajustados fácilmente para futuros despliegues en entornos Docker.
+
+## 11. Integración y Despliegue Continuo (CI/CD)
+
+Para asegurar la calidad, la integración continua y la entrega automatizada de la API, se incluye en este repositorio un archivo Jenkinsfile con la definición de un pipeline básico de CI/CD usando Jenkins.
+
+Este pipeline contempla las siguientes etapas:
+
+Checkout del código fuente: Jenkins descarga la última versión del código desde el repositorio.
+
+Instalación del SDK de .NET 8: Se asegura que el agente tenga la versión correcta del SDK para compilar la aplicación.
+
+Restauración de dependencias: Se ejecuta dotnet restore para instalar todas las dependencias requeridas.
+
+Compilación del proyecto: Se construye la solución usando dotnet build.
+
+Ejecución de pruebas automáticas: Se corren los tests con dotnet test para garantizar la integridad del código.
+
+Publicación de artefactos: Si todas las etapas previas son exitosas, se publica el proyecto para su despliegue y se archivan los artefactos generados.
+
+Limpieza y notificaciones: Al finalizar, limpia el workspace y, en caso de error, envía una notificación por correo (debe configurarse la sección de correo en Jenkins para que funcione).
+
+El archivo Jenkinsfile se encuentra en la raíz del repositorio y puede ser usado como punto de partida para automatizar la construcción, pruebas y despliegue de la aplicación en cualquier entorno donde se disponga de Jenkins.
+
+Nota:
+
+El pipeline puede ser adaptado o ampliado para incluir etapas de despliegue automático a servidores, cloud o contenedores Docker según las necesidades del entorno de producción.
+
+## 12. Diagrama arquitectónico: Resiliencia, Idempotencia y Escalabilidad (Arquitectura híbrida)
+
+La siguiente arquitectura combina componentes on-premise y en la nube, asegurando resiliencia, idempotencia y escalabilidad para la API:
+
+Balanceador de carga (Cloud): Distribuye el tráfico entre múltiples instancias de la API, asegurando alta disponibilidad y escalabilidad horizontal.
+
+Instancias de la API (Cloud): Contenedores Docker desplegados en servicios cloud, configurados con varias réplicas. El sistema escala automáticamente según la demanda y reestablece servicios caídos.
+
+Base de datos principal (On-premise): Información crítica almacenada localmente para cumplimiento de políticas o alta seguridad, con mecanismos de backup y sincronización hacia la nube.
+
+Replica de base de datos (Cloud): Mantiene la disponibilidad y permite recuperación ante desastres.
+
+Cola de mensajes (Cloud): Desacopla procesos, maneja operaciones asíncronas y garantiza la entrega, facilitando la resiliencia e idempotencia.
+
+Gestor de idempotencia: Submódulo responsable de registrar los identificadores únicos de las operaciones, asegurando que las solicitudes repetidas no causen efectos adversos (por ejemplo, registros duplicados).
+
+Servicios externos cloud: Integraciones con servicios como Mapbox para geolocalización, almacenamiento de archivos y correo electrónico.
+
+Monitorización y alertas: Sistemas para detectar fallos, métricas de rendimiento y alertas automáticas.
+
+DIAGRAMA EN LA CARPETA DOCS.
 
 ## 10. Video Explicativo
 

@@ -1,0 +1,12 @@
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\bin\Release\net8.0\EventManagement.Domain.deps.json
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\bin\Release\net8.0\EventManagement.Domain.dll
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\bin\Release\net8.0\EventManagement.Domain.pdb
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\obj\Release\net8.0\EventManagement.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\obj\Release\net8.0\EventManagement.Domain.AssemblyInfoInputs.cache
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\obj\Release\net8.0\EventManagement.Domain.AssemblyInfo.cs
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\obj\Release\net8.0\EventManagement.Domain.csproj.CoreCompileInputs.cache
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\obj\Release\net8.0\EventManagement.Domain.sourcelink.json
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\obj\Release\net8.0\EventManagement.Domain.dll
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\obj\Release\net8.0\refint\EventManagement.Domain.dll
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\obj\Release\net8.0\EventManagement.Domain.pdb
+C:\Users\jhona\OneDrive\Escritorio\Programacion\Proyectos\event-management-api-dotnet\EventManagement.Domain\obj\Release\net8.0\ref\EventManagement.Domain.dll

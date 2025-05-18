@@ -12,6 +12,14 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="Migrations\**\*.cs" />
+    <Compile Include="**\*.cs" Exclude="obj\**;bin\**;Migrations\**\*.cs" />
+  </ItemGroup>
+
 </Project>
+
+

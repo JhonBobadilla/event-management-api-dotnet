@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9/VGjF/hod8=",
+  "dgSpecHash": "d0wCvdmS5e4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\programacion\\proyectos\\event-management-api-dotnet\\EventManagement.Presentation\\EventManagement.Presentation.csproj",
+  "projectFilePath": "C:\\Users\\jhona\\OneDrive\\Escritorio\\Programacion\\Proyectos\\event-management-api-dotnet\\EventManagement.Presentation\\EventManagement.Presentation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jhona\\.nuget\\packages\\epplus\\5.8.8\\epplus.5.8.8.nupkg.sha512",
     "C:\\Users\\jhona\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
