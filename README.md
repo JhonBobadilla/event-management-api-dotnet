@@ -19,11 +19,14 @@ Event Management API es una plataforma backend desarrollada en .NET 8 y C# bajo 
 - [Modelo de Datos](#modelo-de-datos)  
 - [Modelo Relacional](#modelo-relacional)  
 - [Configuración JWT y Seguridad](#configuración-jwt-y-seguridad)  
-- [Ejecución y pruebas locales](#ejecución-y-pruebas-locales)  
+- [Ejecución e instalación](#ejecución-e-instalación)  
 - [Control de versiones y ramas Git](#control-de-versiones-y-ramas-git)  
-- [Hoja de Ruta del Desarrollo](#hoja-de-ruta-del-desarrollo)  
-- [Video Explicativo](#video-explicativo) 
-
+- [Scripts SQL (DDL, DML) y Consultas CRUD](#scripts-sql-ddl-dml-y-consultas-crud)
+- [Dockerización de la API](#dockerización-de-la-api)
+- [Integración y Despliegue Continuo (CI/CD)](#integración-y-despliegue-continuo-cicd)
+- [Diagrama arquitectónico](#diagrama-arquitectónico)
+- [Video Explicativo](#video-explicativo)  
+ 
 ---
 
 ## 3. Instalación
@@ -56,11 +59,114 @@ Requisitos
 
 ## 5. Modelo de Datos
 
-Entidades principales en la capa Domain:
+La plataforma está basada en tres entidades principales:
 
-- User: Usuario autenticado y creador de eventos.
-- Event: Información de eventos (título, descripción, fecha, ubicación, creador).
-- Attendee: Personas registradas como asistentes a los eventos.
+User: Usuario autenticado, creador de eventos en la plataforma.
+
+Event: Evento gestionado en la plataforma, con información de título, descripción, fecha, ubicación, coordenadas y creador.
+
+Attendee: Persona registrada como asistente a un evento (puede ser usuario registrado o invitado externo).
+
+El modelo relacional está representado en el siguiente diagrama ![Diagrama Modelo Relacional](docs/modelo-relacional.png):
+
+- Scripts de Base de Datos (DDL y DML)
+
+Para facilitar la creación y carga inicial de datos en PostgreSQL, se incluyen los siguientes scripts en la carpeta /docs del repositorio:
+
+ddl_event_management.sql: Script DDL para crear las tablas principales.
+dml_event_management.sql: Script DML con inserciones de datos de ejemplo.
+
+- Script DDL – Creación de Tablas
+
+```sql
+CREATE TABLE "User" (
+    "Id" SERIAL PRIMARY KEY,
+    "FirstName" VARCHAR(50) NOT NULL,
+    "LastName" VARCHAR(50) NOT NULL,
+    "Email" VARCHAR(100) UNIQUE NOT NULL,
+    "PasswordHash" VARCHAR(200) NOT NULL,
+    "Phone" VARCHAR(20),
+    "City" VARCHAR(100),
+    "CreatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla de eventos
+CREATE TABLE "Event" (
+    "Id" SERIAL PRIMARY KEY,
+    "Title" VARCHAR(150) NOT NULL,
+    "Description" VARCHAR(500),
+    "Date" TIMESTAMP NOT NULL,
+    "Location" VARCHAR(150),
+    "Address" VARCHAR(200),
+    "City" VARCHAR(100),
+    "Latitude" FLOAT,
+    "Longitude" FLOAT,
+    "CreatedBy" INTEGER NOT NULL REFERENCES "User"("Id") ON DELETE CASCADE,
+    "CreatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla de asistentes
+CREATE TABLE "Attendee" (
+    "Id" SERIAL PRIMARY KEY,
+    "FirstName" VARCHAR(50) NOT NULL,
+    "LastName" VARCHAR(50) NOT NULL,
+    "Email" VARCHAR(100) NOT NULL,
+    "Phone" VARCHAR(20),
+    "City" VARCHAR(100),
+    "Address" VARCHAR(200),
+    "RegisteredAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "EventId" INTEGER NOT NULL REFERENCES "Event"("Id") ON DELETE CASCADE,
+    "UserId" INTEGER REFERENCES "User"("Id")
+);
+```
+- Script DML – Inserción de Datos de Ejemplo
+
+```sql
+INSERT INTO "User" ("FirstName", "LastName", "Email", "PasswordHash", "Phone", "City")
+VALUES
+  ('Jhon', 'Bobadilla', 'jhonprueba@correo.com', '123456', '3200000000', 'Bogotá'),
+  ('Camila', 'López', 'camila@correo.com', 'abcdef', '3112223344', 'Medellín');
+
+-- Eventos de ejemplo
+INSERT INTO "Event" ("Title", "Description", "Date", "Location", "Address", "City", "Latitude", "Longitude", "CreatedBy")
+VALUES
+  ('Conferencia Internacional', 'Un evento técnico para la comunidad.', '2025-06-25 09:00:00', 'Auditorio Principal', 'Calle 123 # 45-67', 'Bogotá', 4.60971, -74.08175, 1),
+  ('Feria Tecnológica', 'Evento anual de tecnología.', '2025-07-10 08:00:00', 'Plaza Mayor', 'Cra 15 # 100-50', 'Medellín', 6.24420, -75.58121, 2);
+
+-- Asistentes de ejemplo
+INSERT INTO "Attendee" ("FirstName", "LastName", "Email", "Phone", "City", "Address", "EventId", "UserId")
+VALUES
+  ('Joseph', 'Borda', 'joseph@correo.com', '3207512548', 'Bogotá', 'Calle 123 #45-67', 1, 1),
+  ('Luis', 'Torres', 'luis@correo.com', '3105559999', 'Medellín', 'Calle 51 #60-70', 2, NULL);
+```
+- Consultas SQL CRUD Básicas para la tabla Event
+
+```sql
+INSERT INTO "Event" ("Title", "Description", "Date", "Location", "Address", "City", "Latitude", "Longitude", "CreatedBy")
+VALUES (
+  'Seminario de Prueba',
+  'Descripción de ejemplo.',
+  '2025-08-01 10:00:00',
+  'Centro de Convenciones',
+  'Carrera 10 # 20-30',
+  'Cali',
+  3.4516,
+  -76.5320,
+  1
+);
+
+Actualizar un evento
+
+UPDATE "Event"
+SET "Title" = 'Título Actualizado', "City" = 'Barranquilla'
+WHERE "Id" = 1;
+
+Eliminar un evento
+
+DELETE FROM "Event" WHERE "Id" = 1;
+
+```
+Los scripts completos para la creación de tablas e inserción de datos se encuentran en la carpeta /docs del repositorio.
 
 ---
 
@@ -360,12 +466,12 @@ Servicios externos cloud: Integraciones con servicios como Mapbox para geolocali
 
 Monitorización y alertas: Sistemas para detectar fallos, métricas de rendimiento y alertas automáticas.
 
-DIAGRAMA EN LA CARPETA DOCS.
+![Diagrama Arquitectonico](docs/diagramaarquitectonico.png)
 
 ## 10. Video Explicativo
 
 El video privado donde se explica la solución y ejecución del proyecto está disponible en:
 
-[xxxxxxxxxxxxxxxxxxxxxxxxxx]
+[xxxxx]
 
 
