@@ -328,6 +328,7 @@ Cuerpo de la petición (ejemplo):
   "phone": "3207512548",
   "city": "Bogotá",
   "address": "Calle 123 # 45-67"
+  "address": "Calle 123 # 45-67"
 }
 ```
 9. Geolocalización: Consulta de Direcciones y Lugares Cercanos
@@ -421,6 +422,9 @@ Nota:
 Debido a limitaciones de tiempo, no fue posible completar y probar el despliegue de la API en Docker. Sin embargo, los archivos mencionados se encuentran listos y estructurados en el repositorio, de manera que puedan ser utilizados o ajustados fácilmente para futuros despliegues en entornos Docker.
 
 ## 11. Integración y Despliegue Continuo (CI/CD)
+
+Descripción de cómo implementaría un flujo de integración y despliegue
+continuo (CI/CD)
 
 Para asegurar la calidad, la integración continua y la entrega automatizada de la API, se incluye en este repositorio un archivo Jenkinsfile con la definición de un pipeline básico de CI/CD usando Jenkins.
 

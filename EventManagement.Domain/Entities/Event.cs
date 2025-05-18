@@ -1,6 +1,6 @@
 namespace EventManagement.Domain.Entities
 {
-    /// Representa un evento creado dentro de la plataforma.
+    
     public class Event
     {
         public int Id { get; set; }
@@ -15,10 +15,10 @@ namespace EventManagement.Domain.Entities
         public int CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        // Relación con el usuario creador del evento
+        
         public User? Creator { get; set; }
 
-        // Colección de asistentes al evento
+        
         public ICollection<Attendee> Attendees { get; set; } = new List<Attendee>();
     }
 }
