@@ -13,7 +13,7 @@ COPY ["EventManagement.Infrastructure/EventManagement.Infrastructure.csproj", "E
 
 RUN dotnet restore "EventManagement.Presentation/EventManagement.Presentation.csproj"
 
-# Copiar el resto
+
 COPY . .
 
 WORKDIR "/src/EventManagement.Presentation"

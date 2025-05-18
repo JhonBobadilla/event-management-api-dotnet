@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
-using EventManagement.Application.Dtos; // <-- IMPORTANTE para los DTOs
+using EventManagement.Application.Dtos; 
 
 namespace EventManagement.Presentation.Controllers
 {
@@ -198,7 +198,7 @@ namespace EventManagement.Presentation.Controllers
             return Ok(new { message = $"Se registraron {eventsList.Count} eventos correctamente." });
         }
 
-        // === NUEVO ENDPOINT: Análisis avanzado de asistentes ===
+        
         [HttpGet("attendees-by-day")]
         public async Task<IActionResult> GetAttendeesSummaryByDayOfWeek()
         {

@@ -3,7 +3,7 @@ using EventManagement.Domain.Entities;
 
 namespace EventManagement.Infrastructure.Persistence
 {
-    /// DbContext principal para la app, gestionando entidades y conexión a PostgreSQL.
+    
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

@@ -327,7 +327,7 @@ Cuerpo de la petición (ejemplo):
   "email": "joseph@correo.com",
   "phone": "3207512548",
   "city": "Bogotá",
-  "address": "Calle 123 #45-67"
+  "address": "Calle 123 # 45-67"
 }
 ```
 9. Geolocalización: Consulta de Direcciones y Lugares Cercanos
@@ -422,6 +422,9 @@ Debido a limitaciones de tiempo, no fue posible completar y probar el despliegue
 
 ## 11. Integración y Despliegue Continuo (CI/CD)
 
+Descripción de cómo implementaría un flujo de integración y despliegue
+continuo (CI/CD)
+
 Para asegurar la calidad, la integración continua y la entrega automatizada de la API, se incluye en este repositorio un archivo Jenkinsfile con la definición de un pipeline básico de CI/CD usando Jenkins.
 
 Este pipeline contempla las siguientes etapas:
@@ -472,6 +475,6 @@ Monitorización y alertas: Sistemas para detectar fallos, métricas de rendimien
 
 El video privado donde se explica la solución y ejecución del proyecto está disponible en:
 
-[xxxxx]
+[https://1drv.ms/v/c/fef8c0bca23e1de1/EbVFyoutPddHni8i19zvGigBBR56jj4BjsCMxfcfpBFWVw?e=NOKcDX]
 
 
